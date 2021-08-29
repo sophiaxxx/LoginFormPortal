@@ -1,0 +1,59 @@
+﻿@model Login.Mvc.Ui.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Login Form </h3>
+
+<table width="40%" cellpadding="1" cellspacing="5">
+    <tr>
+        <td colspan="2" style="color:#f00;font-size:larger">@ViewBag.Status</td>
+    </tr>
+    <tr>
+        <td align="right">Account :</td>
+        <td>@Html.TextBoxFor(m => m.UserName, new { @style = "width:200px", @id = "txtusername" })</td>
+    </tr>
+    <tr>
+        <td align="right">Password :</td>
+        <td>@Html.PasswordFor(m => m.UserPassword, new { @style = "width:200px", @id = "txtuserpassword" })</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <input type="submit" value="login" title="Login" id="btnLogin" onclick="display();" />
+        </td>
+    </tr>
+</table>
+
+<script language="javascript">
+
+    function display() {
+        //if ($("#txtusername").attr("value") == "") {
+        if ($("#txtusername").val() == "") {
+            alert("Please Enter Account.");
+            return false;
+        } else if ($("#txtuserpassword").val() == "") {
+            alert("Please enter Password.");
+            return false;
+        }
+        else {
+            var userInfo = {
+                UserName: $('#txtusername').val(),
+                UserPassword: $('#txtuserpassword').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/Home/ValidLoginInfo',
+                data: userInfo,
+                success: function (data) {
+                    alert(data.result.Msg);
+                },
+                error: function () {
+                    alert("登入失敗!");
+                }
+
+            });
+           
+        }
+    }
+</script>

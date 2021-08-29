@@ -1,0 +1,53 @@
+﻿@model LoginFormPortal.Models.UserInfo
+@{
+    ViewBag.Title = "Index";
+}
+<script language="javascript">
+
+    function display() {
+        //if ($("#txtusername").attr("value") == "") {
+        if ($("#txtusername").val() == "") {
+            alert("Please Enter Account.");
+            return false;
+        } else if ($("#txtuserpassword").val() == "") {
+            alert("Please enter Password.");
+            return false;
+        }
+        else {
+            var userInfo = {
+                Account: $('#txtusername').val(),
+                Password: $('#txtuserpassword').val()
+            };
+            $.ajax({
+                url: '/Home/ValidLoginInfo',
+                type: 'post',
+                dataType: 'json',
+                data: userInfo
+            }).success(function (result) {
+                alert(result);
+            }).error(function (data) {
+                alert("登入失敗!");
+            });
+        }
+    }
+</script>
+<h3>Login Form </h3>
+
+    <table width="40%" cellpadding="1" cellspacing="5">
+        <tr>
+            <td colspan="2" style="color:#f00;font-size:larger">@ViewBag.Status</td>
+        </tr>
+        <tr>
+            <td align="right">Account :</td>
+            <td>@Html.TextBoxFor(m => m.Account, new { @style = "width:200px", @id = "txtusername" })</td>
+        </tr>
+        <tr>
+            <td align="right">Password :</td>
+            <td>@Html.PasswordFor(m => m.Password, new { @style = "width:200px", @id = "txtuserpassword" })</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="button" onclick=" btnLogin();"> Login </button>
+            </td>
+        </tr>
+    </table>
