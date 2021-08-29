@@ -59,7 +59,7 @@ namespace Login.Mvc.Ui.Controllers
                     resultViewModel.Msg = "Login Error(Home-002)";
                 }
             }
-            catch(Exception ex)
+            catch
             {
                 resultViewModel.IsSuccess = false;
                 resultViewModel.Msg = "Login Error(Home-003)";

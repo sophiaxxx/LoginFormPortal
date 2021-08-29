@@ -25,17 +25,29 @@
 </table>
 
 <script language="javascript">
-
+    var isOk = false;
+    function ValidatePassword() {
+        var str = $("#txtuserpassword").val();
+        
+        const rules = /[*]/;
+        if (rules.test(str)) { isOk = false; }
+        else { isOk = true; }
+        
+    }
     function display() {
-        //if ($("#txtusername").attr("value") == "") {
+         
         if ($("#txtusername").val() == "") {
             alert("Please Enter Account.");
             return false;
-        } else if ($("#txtuserpassword").val() == "") {
+        }
+        if ($("#txtuserpassword").val() == "") {
             alert("Please enter Password.");
             return false;
         }
-        else {
+        else { ValidatePassword(); }
+
+        if (isOk) {
+            console.log("isOk" + isOk);
             var userInfo = {
                 UserName: $('#txtusername').val(),
                 UserPassword: $('#txtuserpassword').val()
@@ -53,7 +65,7 @@
                 }
 
             });
-           
-        }
+
+        } else { alert("Password cannot contains '*'.");}
     }
 </script>
